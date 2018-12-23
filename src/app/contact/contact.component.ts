@@ -65,6 +65,7 @@ export class ContactComponent implements OnInit {
     this.onValueChanged();
   }
   onSubmit() {
+    console.log('hello');
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
     this.feedbackForm.reset({

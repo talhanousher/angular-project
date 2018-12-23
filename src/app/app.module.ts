@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -41,7 +42,7 @@ import { LoginComponent } from './login/login.component';
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -60,13 +61,12 @@ import { LoginComponent } from './login/login.component';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
+    MatSliderModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [
-    LoginComponent
-  ],
+  entryComponents: [LoginComponent],
   providers: [DishService, PromotionService, LeaderService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
