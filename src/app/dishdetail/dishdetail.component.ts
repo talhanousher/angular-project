@@ -60,7 +60,7 @@ export class DishdetailComponent implements OnInit {
     this.commentsForm = this.fb.group({
       author: ['', [Validators.required, Validators.minLength(2)]],
       comment: ['', Validators.required],
-      rating: 0,
+      rating: 5,
       date: undefined
     });
     this.commentsForm.valueChanges.subscribe(data => this.onValueChanged(data));
@@ -79,9 +79,9 @@ export class DishdetailComponent implements OnInit {
     this.commentsForm.reset({
       author: '',
       comment: '',
-      rating: 0
+      rating: 5
     });
-    this.commentFormDirective.reset();
+    // this.commentFormDirective.reset();
   }
   setPrevNext(dishId: string) {
     const index = this.dishIds.indexOf(dishId);
