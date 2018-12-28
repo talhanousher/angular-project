@@ -24,16 +24,19 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { DishdetailComponent } from './dishdetail/dishdetail.component';
-import { DishService } from './services/dish.service';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+import { LoginComponent } from './login/login.component';
+
 import { AppRoutingModule } from './app-routing/app-routing.module';
+
+import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
-import { LoginComponent } from './login/login.component';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 import { baseURL } from './shared/baserurl';
 @NgModule({
@@ -72,7 +75,7 @@ import { baseURL } from './shared/baserurl';
     HttpModule
   ],
   entryComponents: [LoginComponent],
-  providers: [DishService, PromotionService, LeaderService, { provide: 'BaseURL', useValue: baseURL }],
+  providers: [DishService, PromotionService, LeaderService, ProcessHTTPMsgService, { provide: 'BaseURL', useValue: baseURL }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
