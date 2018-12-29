@@ -8,12 +8,12 @@ import { DishService } from '../services/dish.service';
 })
 export class MenuComponent implements OnInit {
   dishes: Dish[];
+  errMess: string;
   // selectedDish: Dish;
   constructor(private dishService: DishService, @Inject('BaseURL') private BaseURL) { }
   ngOnInit() {
-    this.dishService.getDishes().subscribe(dish => {
-      this.dishes = dish;
-    });
+    this.dishService.getDishes().subscribe(dish => this.dishes = dish
+      , err => this.errMess = <any>err);
   }
 
 }
