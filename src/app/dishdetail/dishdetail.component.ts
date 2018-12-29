@@ -14,6 +14,7 @@ import { Comment } from '../shared/comment';
 })
 export class DishdetailComponent implements OnInit {
   dish: Dish;
+  dishcopy: Dish;
   dishIds: string[];
   prev: string;
   next: string;
@@ -39,6 +40,7 @@ export class DishdetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
+    private dishService: DishService,
     @Inject('BaseURL') private BaseURL
   ) {
     this.createForm();
@@ -48,6 +50,7 @@ export class DishdetailComponent implements OnInit {
     this.dishservice.getDishIds().subscribe(dishIds => (this.dishIds = dishIds));
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id']))).subscribe(dish => {
       this.dish = dish;
+      this.dishcopy = dish;
       this.setPrevNext(dish.id);
     }, err => this.errMess = err);
   }
@@ -64,14 +67,18 @@ export class DishdetailComponent implements OnInit {
   }
   onSubmit() {
     this.comment = this.commentsForm.value;
-    console.log(this.comment);
-    console.log(this.dish);
     this.dish.comments.push({
       author: this.comment.author,
       rating: this.comment.rating,
       comment: this.comment.comment,
       date: new Date().toISOString()
     });
+    // this.dishcopy.comments.push(this.comment);
+    this.dishService.putDish(this.dish)
+      .subscribe(dish => {
+        this.dish = dish; this.dishcopy = dish;
+      },
+        errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
     this.commentsForm.reset({
       author: '',
       comment: '',
