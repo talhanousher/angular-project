@@ -36,6 +36,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
+import { FeedbackService } from './services/feedback.service';
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 import { baseURL } from './shared/baserurl';
@@ -77,7 +78,14 @@ import { HighlightDirective } from './directives/highlight.directive';
     HttpModule
   ],
   entryComponents: [LoginComponent],
-  providers: [DishService, PromotionService, LeaderService, ProcessHTTPMsgService, { provide: 'BaseURL', useValue: baseURL }],
+  providers: [
+    DishService,
+    PromotionService,
+    LeaderService,
+    FeedbackService,
+    ProcessHTTPMsgService,
+    { provide: 'BaseURL', useValue: baseURL }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animations';
+import { flyInOut, expand } from '../animations/app.animations';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -11,14 +12,18 @@ import { flyInOut } from '../animations/app.animations';
   host: {
     '[@flyInOut]': 'true',
     'style': 'display: block;'
-    },
-    animations: [
-      flyInOut()
-    ]
+  },
+  animations: [
+    flyInOut(),
+    expand()
+  ]
 })
 export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
+  feedbackErrMess;
+  loading: Boolean = true;
+  submitted: Boolean = false;
   @ViewChild('fform') feedBackFormDirective;
   contactType = ContactType;
   formErrors = {
@@ -47,11 +52,11 @@ export class ContactComponent implements OnInit {
       email: 'Email not in valid format.'
     }
   };
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private feedbackService: FeedbackService) {
     this.createForm();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   createForm() {
     this.feedbackForm = this.fb.group({
       firstname: [
@@ -74,9 +79,16 @@ export class ContactComponent implements OnInit {
     this.onValueChanged();
   }
   onSubmit() {
-    console.log('hello');
-    this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
+    this.loading = false;
+    this.feedbackService.submitFeedback(this.feedbackForm.value).subscribe(res => {
+      console.log(res);
+      this.loading = true;
+      this.submitted = true;
+      this.feedback = res;
+      setTimeout(() => {
+        this.submitted = false;
+      }, 5000);
+    }, errmess => { this.feedback = null; this.feedbackErrMess = <any>errmess; });
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',

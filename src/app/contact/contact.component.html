@@ -33,9 +33,8 @@
   </div>
   <div fxFlex fxFlexOffset="20px" class="form-size">
     <h3>Send us your Feedback</h3>
-    <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
-
-    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
+    <!-- <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p> -->
+    <form *ngIf="loading && !submitted" [@expand] novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
       <p>
         <mat-form-field class="half-width">
           <input matInput formControlName="firstname" placeholder="First Name" type="text">
@@ -75,5 +74,20 @@
       </p>
       <button [disabled]="feedbackForm.invalid" type="submit" mat-button class="background-primary text-floral-white">Submit</button>
     </form>
+    <div [hidden]="loading || feedbackErrMess">
+      <h3>Submitting Form</h3>
+      <mat-spinner></mat-spinner>
+      <h4>Loading . . . Please Wait</h4>
+    </div>
+    <div *ngIf="submitted" [@expand]>
+      <h3>Your Submission</h3>
+      <p>First Name : {{feedback.firstname}}</p>
+      <p>Last Name : {{feedback.lastname}}</p>
+      <p>Tel.Phone : {{feedback.telnum}}</p>
+      <p>Email : {{feedback.email}}</p>
+      <p>Contact You : {{feedback.agree}}</p>
+      <p>How : {{feedback.contacttype}}</p>
+      <p>Feedback : {{feedback.message}} </p>
+    </div>
   </div>
 </div>
